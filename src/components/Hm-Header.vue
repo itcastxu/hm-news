@@ -1,6 +1,8 @@
 <template>
   <div class="hmheader">
-    <div class="back"><span class="iconfont iconjiantou2"></span></div>
+    <div class="back" @click="$router.go(-1)">
+      <span class="iconfont iconjiantou2"></span>
+    </div>
     <div class="title"><slot></slot></div>
     <div class="extra"></div>
   </div>
