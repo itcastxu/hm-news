@@ -17,13 +17,14 @@
         :rules="rules.password"
       />
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">
-          登录
-        </van-button>
+        <van-button round block type="info" native-type="submit"
+          >登录</van-button
+        >
       </div>
     </van-form>
     <p class="tips">
-      没有账号？去<router-link to="/register">注册</router-link>
+      没有账号？去
+      <router-link to="/register">注册</router-link>
     </p>
   </div>
 </template>
@@ -64,12 +65,15 @@ export default {
         username: this.username,
         password: this.password
       })
-      console.log(res)
+      // console.log(res)
       const { statusCode, message, data } = res.data
       if (statusCode === 200) {
+        // console.log(res)
+
         this.$toast.success(message)
-        this.$router.push('/')
         localStorage.setItem('token', data.token)
+        localStorage.setItem('userId', data.user.id)
+        this.$router.push('/user')
       } else {
         this.$toast.fail(message)
       }
