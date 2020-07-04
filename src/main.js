@@ -30,10 +30,11 @@ Vue.filter('time', function(input) {
   return moment(input).format('YYYY-MM-DD')
 })
 
+const pages = ['/user', '/userEdit']
 // 前置路由导航守卫是为了判断是否有token
 router.beforeEach(function(to, from, next) {
   const token = localStorage.getItem('token')
-  if (to.path === '/user') {
+  if (pages.includes(to.path)) {
     if (token) {
       next()
     } else {
@@ -59,6 +60,7 @@ axios.interceptors.response.use(function(response) {
   console.log(response)
   const { statusCode, message } = response.data
   if (statusCode === 401 && message === '用户信息验证失败') {
+    Toast.fail(message)
     localStorage.removeItem('userId')
     localStorage.removeItem('token')
     router.push('/login')
