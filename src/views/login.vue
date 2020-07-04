@@ -3,12 +3,7 @@
     <hm-header></hm-header>
     <hm-logo></hm-logo>
     <van-form @submit="onSubmit">
-      <van-field
-        v-model="username"
-        label="用户名"
-        placeholder="请输入用户名/手机号"
-        :rules="rules.username"
-      />
+      <van-field v-model="username" label="用户名" placeholder="请输入用户名/手机号" :rules="rules.username" />
       <van-field
         v-model="password"
         type="password"
@@ -17,13 +12,12 @@
         :rules="rules.password"
       />
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">
-          登录
-        </van-button>
+        <van-button round block type="info" native-type="submit">登录</van-button>
       </div>
     </van-form>
     <p class="tips">
-      没有账号？去<router-link to="/register">注册</router-link>
+      没有账号？去
+      <router-link to="/register">注册</router-link>
     </p>
   </div>
 </template>
@@ -64,12 +58,13 @@ export default {
         username: this.username,
         password: this.password
       })
-      console.log(res)
+      // console.log(res)
       const { statusCode, message, data } = res.data
       if (statusCode === 200) {
         this.$toast.success(message)
-        this.$router.push('/')
+        localStorage.setItem('userId', data.user.id)
         localStorage.setItem('token', data.token)
+        this.$router.push('/user')
       } else {
         this.$toast.fail(message)
       }
