@@ -6,7 +6,22 @@ import './style/iconfont.less'
 import router from './routers'
 import hmHeader from './components/Hm-Header.vue'
 import hmLogo from './components/Hm-Logo.vue'
-import { Button, Field, Form, Toast } from 'vant'
+import hmPost from './components/Hm-Post.vue'
+import {
+  Button,
+  Field,
+  Form,
+  Toast,
+  Dialog,
+  Uploader,
+  Radio,
+  RadioGroup,
+  Cell,
+  CellGroup,
+  List,
+  Tab,
+  Tabs
+} from 'vant'
 import axios from 'axios'
 import moment from 'moment'
 import HmNavbar from './components/HmNavbar.vue'
@@ -21,16 +36,41 @@ Vue.use(Button)
 Vue.use(Field)
 Vue.use(Form)
 Vue.use(Toast)
+Vue.use(Dialog)
+Vue.use(Uploader)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(Cell)
+Vue.use(CellGroup)
+Vue.use(List)
+Vue.use(Tab)
+Vue.use(Tabs)
 
 Vue.component('hm-header', hmHeader)
 Vue.component('hm-logo', hmLogo)
 Vue.component('hm-navbar', HmNavbar)
+Vue.component('hm-post', hmPost)
 
 Vue.filter('time', function(input) {
   return moment(input).format('YYYY-MM-DD')
 })
 
-const pages = ['/user', '/userEdit']
+// 处理图片路径问题
+Vue.prototype.$url = function(url) {
+  if (url.startsWith('http')) {
+    return url
+  } else {
+    return axios.defaults.baseURL + url
+  }
+}
+
+const pages = [
+  '/user',
+  '/userEdit',
+  '/userFollows',
+  '/userComments',
+  '/userStar'
+]
 // 前置路由导航守卫是为了判断是否有token
 router.beforeEach(function(to, from, next) {
   const token = localStorage.getItem('token')
@@ -57,7 +97,7 @@ axios.interceptors.request.use(function(config) {
 // 响应拦截器 在返回数据之前判断token是否失效
 // 此时浏览器会跳一下，因为发送请求了，请求user页面的数据时，被响应拦截器拦截了，所以又跳回到login页面
 axios.interceptors.response.use(function(response) {
-  console.log(response)
+  // console.log(response)
   const { statusCode, message } = response.data
   if (statusCode === 401 && message === '用户信息验证失败') {
     Toast.fail(message)

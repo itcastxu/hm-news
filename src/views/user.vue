@@ -16,22 +16,22 @@
         <span class="iconfont iconjiantou1"></span>
       </div>
     </div>
-    <hm-navbar>
+    <hm-navbar @click="$router.push('/userFollows')">
       <template>我的关注</template>
       <template #content>关注的用户</template>
     </hm-navbar>
-    <hm-navbar>
+    <hm-navbar @click="$router.push('/userComments')">
       <template>我的跟帖</template>
       <template #content>跟帖/回复</template>
     </hm-navbar>
-    <hm-navbar>
+    <hm-navbar @click="$router.push('/userStar')">
       <template>我的收藏</template>
       <template #content>文章/收藏</template>
     </hm-navbar>
     <hm-navbar @click="$router.push('/userEdit')">
       <template>设置</template>
     </hm-navbar>
-    <hm-navbar>
+    <hm-navbar @click="logout">
       <template>退出</template>
     </hm-navbar>
   </div>
@@ -51,6 +51,33 @@ export default {
     const { statusCode, data } = res.data
     if (statusCode === 200) {
       this.info = data
+    }
+  },
+  methods: {
+    async logout() {
+      // this.$dialog
+      //   .confirm({
+      //     title: '退出',
+      //     message: '亲，您确认要退出该系统吗?'
+      //   })
+      //   .then(() => {
+      //     // on confirm
+      //     localStorage.removeItem('token')
+      //     localStorage.removeItem('userId')
+      //     this.$router.push('/login')
+      //   })
+      //   .catch(() => {
+      //     // on cancel
+      //   })
+      try {
+        await this.$dialog.confirm({
+          title: '退出',
+          message: '亲，您确认要退出该系统吗?'
+        })
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
+        this.$router.push('/login')
+      } catch {}
     }
   }
 }
