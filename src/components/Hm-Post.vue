@@ -1,6 +1,11 @@
 <template>
   <div class="hmpost">
-    <div class="post" v-for="item in lis" :key="item.id">
+    <div
+      class="post"
+      v-for="item in lis"
+      :key="item.id"
+      @click="$router.push(`/post/${item.id}`)"
+    >
       <div class="vedio" v-if="item.content.startsWith('https')">
         <div class="left">
           <div class="title">{{ item.title }}</div>
@@ -58,10 +63,12 @@ export default {
     return {}
   },
   async created() {
-    console.log(this.lis)
+    // console.log(this.lis)
   },
   methods: {},
-  props: ['lis']
+  props: {
+    lis: Array
+  }
 }
 </script>
 

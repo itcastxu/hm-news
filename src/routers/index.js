@@ -8,6 +8,7 @@ import userFollows from '../views/user_follows.vue'
 import userComments from '../views/userComments.vue'
 import userStar from '../views/userStar.vue'
 import Home from '../views/index.vue'
+import Post from '../views/post.vue'
 
 Vue.use(VueRouter)
 
@@ -25,7 +26,8 @@ const router = new VueRouter({
     { path: '/userFollows', component: userFollows },
     { path: '/userComments', component: userComments },
     { path: '/userStar', component: userStar },
-    { path: '/', component: Home }
+    { path: '/', component: Home, name: 'home' },
+    { path: '/post/:id', component: Post }
   ]
 })
 

@@ -7,6 +7,8 @@ import router from './routers'
 import hmHeader from './components/Hm-Header.vue'
 import hmLogo from './components/Hm-Logo.vue'
 import hmPost from './components/Hm-Post.vue'
+import hmComment from './components/hm-comment.vue'
+import hmFloor from './components/hm-floor.vue'
 import {
   Button,
   Field,
@@ -20,7 +22,8 @@ import {
   CellGroup,
   List,
   Tab,
-  Tabs
+  Tabs,
+  PullRefresh
 } from 'vant'
 import axios from 'axios'
 import moment from 'moment'
@@ -45,14 +48,22 @@ Vue.use(CellGroup)
 Vue.use(List)
 Vue.use(Tab)
 Vue.use(Tabs)
+Vue.use(PullRefresh)
 
 Vue.component('hm-header', hmHeader)
 Vue.component('hm-logo', hmLogo)
 Vue.component('hm-navbar', HmNavbar)
 Vue.component('hm-post', hmPost)
+Vue.component('hm-comment', hmComment)
+Vue.component('hm-floor', hmFloor)
 
-Vue.filter('time', function(input) {
-  return moment(input).format('YYYY-MM-DD')
+moment.locale('zh-CN')
+Vue.filter('time', function(input, str = 'YYYY-MM-DD') {
+  return moment(input).format(str)
+})
+
+Vue.filter('fromnow', function(input) {
+  return moment(input).fromNow()
 })
 
 // 处理图片路径问题

@@ -1,7 +1,8 @@
 <template>
   <div class="mystar">
     <hm-header>我的收藏</hm-header>
-    <div class="post" v-for="item in list" :key="item.id">
+    <hm-post :lis="lis"></hm-post>
+    <!-- <div class="post" v-for="item in list" :key="item.id">
       <div class="single" v-if="item.cover.length < 3">
         <div class="left">
           <div class="title">{{ item.title }}</div>
@@ -33,7 +34,7 @@
         </div>
       </div>
       <div class="vedio" v-else></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -41,7 +42,7 @@
 export default {
   data() {
     return {
-      list: []
+      lis: []
     }
   },
   created() {
@@ -53,8 +54,12 @@ export default {
       //   console.log(res)
       const { statusCode, data } = res.data
       if (statusCode === 200) {
-        this.list = data
-        console.log(this.list)
+        this.lis = data
+        // console.log(this.lis)
+        // 遍历数据，添加属性，渲染跟帖数
+        this.lis.forEach(item => {
+          item.comment_length = item.comments.length
+        })
       }
     }
   }
